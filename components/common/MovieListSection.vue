@@ -42,7 +42,7 @@ const onImageError = (e: any) => {
         <nuxt-img
           :src="`https://image.tmdb.org/t/p/original${item.poster_path}`"
           :alt="`movie-${item.id}`"
-          class="rounded-xl w-full h-[18rem]"
+          class="rounded-xl w-full h-[18rem] object-cover"
           loading="lazy"
           @error="(e) => onImageError(e)"
         />
