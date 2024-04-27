@@ -28,7 +28,9 @@ API Key & Token includes
 - Nuxt 3
 - Vue 3
 - Typescript
-- SASS
+- Tailwind
+- Pinia
+- SASS/SCSS
 - Eslint
 - Prettier
 ```
