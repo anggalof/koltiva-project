@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import localImagePath from "~/assets/img/image-not-found.jpg";
 import MainSection from "~/components/common/MainSection.vue";
 import {
   useAddFavorite,
@@ -60,10 +59,6 @@ const handleLoadMore = async () => {
   }
 };
 
-const handleImageError = (e: any) => {
-  e.target.src = localImagePath;
-};
-
 const handleFilterAction = async (id: any) => {
   isGenre.value = id.toString();
   const newData: any = await loadDiscoverData(isGenre.value);
@@ -94,6 +89,5 @@ favoriteMovies.value = favorite;
     @click="handleFilterAction"
     @change="handleAddFavorite"
     @load="handleLoadMore"
-    @error="handleImageError"
   />
 </template>

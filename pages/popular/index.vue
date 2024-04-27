@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import localImagePath from "~/assets/img/image-not-found.jpg";
+import { ref, computed, watch } from "vue";
 import {
   useAddFavorite,
   usePopularMovies,
@@ -27,6 +26,14 @@ const router = useRouter();
 if (!popularType.value) {
   router.push("/home");
 }
+
+watch(
+  () => searchStore.popularType,
+  async (newValue: any) => {
+    const data: any = await loadPopularData(newValue);
+    popularList.value = data?.results;
+  },
+);
 
 const loadPopularData = async (name: string) => {
   isLoadingMovie.value = true;
@@ -75,10 +82,6 @@ const handleLoadMore = async () => {
   }
 };
 
-const handleImageError = (e: any) => {
-  e.target.src = localImagePath;
-};
-
 const handleFilterAction = async (id: any) => {
   isGenre.value = id.toString();
   const newData: any = await loadPopularData(popularType.value);
@@ -109,6 +112,5 @@ favoriteMovies.value = favorite;
     @click="handleFilterAction"
     @change="handleAddFavorite"
     @load="handleLoadMore"
-    @error="handleImageError"
   />
 </template>

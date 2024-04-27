@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { IconStar } from "@tabler/icons-vue";
+import localImagePath from "~/assets/img/image-not-found.jpeg";
 import { getYear } from "~/utils/formatter/dateTime";
 import { formatNumber } from "~/utils/formatter/formatNumber";
 import type { TMovies } from "~/types/Movies";
@@ -27,6 +28,8 @@ const onFavorite = (id: any) => {
 const onImageError = (e: any) => {
   emit("error", e);
 };
+
+const showMore = props.title.includes("Movies");
 </script>
 
 <template>
@@ -44,15 +47,16 @@ const onImageError = (e: any) => {
           :alt="`movie-${item.id}`"
           class="object-cover rounded-xl w-full h-[18rem]"
           loading="lazy"
+          :placeholder="localImagePath"
           @error="(e) => onImageError(e)"
         />
 
         <div class="pt-2 pb-[0.1rem] text-[12px] text-black font-bold">
-          {{ title === "Movies" ? item.title : item.name }}
+          {{ showMore ? item.title : item.name }}
         </div>
         <div class="text-sm font-medium text-[#929292]">
           {{
-            title === "Movies"
+            showMore
               ? getYear(item.release_date)
               : item.first_air_date
               ? getYear(item.first_air_date)

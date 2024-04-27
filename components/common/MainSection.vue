@@ -19,7 +19,6 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "change", id: number, type: boolean): void;
   (e: "load"): void;
-  (e: "error", index: number): void;
   (e: "click", id: any): void;
 }>();
 
@@ -29,10 +28,6 @@ const changeFavorite = (id: number, type: boolean) => {
 
 const loadMore = () => {
   emit("load");
-};
-
-const onImageError = (e: any) => {
-  emit("error", e);
 };
 
 const handleFilterAction = (id: any) => {
@@ -78,7 +73,6 @@ const countLoading = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
             :show="show"
             @change="changeFavorite"
             @load="loadMore"
-            @error="onImageError"
           />
         </div>
         <div v-else>

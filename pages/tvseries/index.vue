@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import localImagePath from "~/assets/img/image-not-found.jpg";
 import {
   useAddFavorite,
   useDiscoverTVSeries,
@@ -58,10 +57,6 @@ const handleLoadMore = async () => {
   }
 };
 
-const handleImageError = (e: any) => {
-  e.target.src = localImagePath;
-};
-
 const handleFilterAction = async (id: any) => {
   isGenre.value = id.toString();
   const newData: any = await loadDiscoverTVSeriesData(isGenre.value);
@@ -92,6 +87,5 @@ favoriteMovies.value = favorite;
     @click="handleFilterAction"
     @change="handleAddFavorite"
     @load="handleLoadMore"
-    @error="handleImageError"
   />
 </template>

@@ -29,7 +29,7 @@ const loadMore = () => {};
 </script>
 
 <template>
-  <div class="bg-[#EBEAEA] p-4 md:p-6">
+  <div class="bg-[#EBEAEA] p-4 md:p-6 md:mb-24">
     <div class="flex items-center text-white">
       <div class="text-lg font-bold text-black">Showing search results for:</div>
       <div class="block md:flex;">
@@ -39,16 +39,26 @@ const loadMore = () => {};
       </div>
     </div>
     <div class="mt-4 mb-10">
-      <MovieListSection
-        :title="title"
-        :data="props.search"
-        :favorite="props.favorite"
-        :loading="loading"
-        :show="show"
-        @load="loadMore"
-        @change="changeFavorite"
-        @error="onImageError"
-      />
+      <div v-if="props.search.length > 0">
+        <MovieListSection
+          :title="title"
+          :data="props.search"
+          :favorite="props.favorite"
+          :loading="loading"
+          :show="show"
+          @load="loadMore"
+          @change="changeFavorite"
+          @error="onImageError"
+        />
+      </div>
+      <div v-else>
+        <ElementsNotFound
+          title="Not Founded!"
+          :description="`${
+            title === 'Movies' ? 'Movie List' : 'TV Series List'
+          } does not have a genre that you choose! please choose another genres.`"
+        />
+      </div>
     </div>
   </div>
 </template>

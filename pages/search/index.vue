@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, watch, ref } from "vue";
-import localImagePath from "~/assets/img/image-not-found.jpg";
 import {
   useAddFavorite,
   useDiscoverMovies,
@@ -55,10 +54,6 @@ const handleAddFavorite = async (id: number, type: boolean) => {
   onLoadFavoriteMovies();
 };
 
-const handleImageError = (e: any) => {
-  e.target.src = localImagePath;
-};
-
 const favorite: any = await useFavoriteMovies();
 favoriteMovies.value = favorite;
 const movies: any = await loadSearchMovie(query.value);
@@ -68,12 +63,11 @@ searchMovies.value = movies?.results;
 <template>
   <CommonSearchResultSection
     title="Movies"
-    :query="query"
+    :query="keyword"
     :search="searchMovies"
     :favorite="favoriteMovies.results"
     :loading="isLoadingFav"
     :show="isShowLoadMore"
     @change="handleAddFavorite"
-    @error="handleImageError"
   />
 </template>

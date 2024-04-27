@@ -7,14 +7,6 @@ const props = defineProps<{
   placeholder: boolean;
 }>();
 
-const emit = defineEmits<{
-  (e: "error", index: number): void;
-}>();
-
-const onImageError = (e: any) => {
-  emit("error", e);
-};
-
 const handleType = () => {
   const searchStore = useSearchStore();
   searchStore.setPopularType(props.title);
@@ -72,7 +64,6 @@ const countLoading = [1, 2, 3, 4, 5, 6];
           :subtype="title === 'Popular Movies' ? item.release_date : item.first_air_date"
           :character="item.character"
           :rating="item.vote_average"
-          @error="onImageError"
         />
       </div>
     </div>

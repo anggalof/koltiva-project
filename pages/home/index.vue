@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import localImagePath from "~/assets/img/image-not-found.jpg";
 import { usePopularMovies, useTVPopularMovies } from "~/composables/useMovies";
 
 const popularMovies: any = ref([]);
@@ -31,10 +30,6 @@ const movies: any = await loadPopularData();
 popularMovies.value = movies?.results;
 const tvMovies: any = await loadTVPopularData();
 tvPopularMovies.value = tvMovies?.results;
-
-const handleImageError = (e: any) => {
-  e.target.src = localImagePath;
-};
 </script>
 
 <template>
@@ -43,14 +38,12 @@ const handleImageError = (e: any) => {
       title="Popular Movies"
       :data="popularMovies"
       :placeholder="isLoadPopularMovie"
-      @error="handleImageError"
     />
 
     <common-slider-section
       title="Popular TV Series"
       :data="tvPopularMovies"
       :placeholder="isLoadPopularTV"
-      @error="handleImageError"
     />
   </div>
 </template>

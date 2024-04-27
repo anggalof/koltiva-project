@@ -1,5 +1,6 @@
 <script setup>
 import { IconStar } from "@tabler/icons-vue";
+import localImagePath from "~/assets/img/image-not-found.jpeg";
 import { formatNumber } from "~/utils/formatter/formatNumber";
 import { getYear } from "~/utils/formatter/dateTime";
 
@@ -33,12 +34,6 @@ defineProps({
     default: 0,
   },
 });
-
-const emit = defineEmits(["error"]);
-
-const onImageError = (e) => {
-  emit("error", e);
-};
 </script>
 
 <template>
@@ -49,8 +44,8 @@ const onImageError = (e) => {
         :alt="`movie-${id}`"
         class="max-w-none w-[10rem] h-[15rem]"
         :class="title === 'Cast' ? 'rounded-tl-xl rounded-tr-xl' : 'rounded-xl'"
+        :placeholder="localImagePath"
         loading="lazy"
-        @error="(e) => onImageError(e)"
       />
       <div :class="title === 'Cast' && 'bg-white text-black p-2 rounded-br-xl rounded-bl-xl'">
         <div class="pt-2 pb-[0.1rem] text-[12px] text-black font-bold">

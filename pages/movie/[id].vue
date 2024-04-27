@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import localImagePath from "~/assets/img/image-not-found.jpg";
+import localImagePath from "~/assets/img/image-not-found.jpeg";
 import { formatNumber } from "~/utils/formatter/formatNumber";
 import { getYear } from "~/utils/formatter/dateTime";
 import { useMovieById, useMovieRecommendation, useMovieCast } from "~/composables/useMovies";
@@ -96,7 +96,7 @@ const handleImageError = (e: any) => {
             <img
               :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`"
               :alt="`movie-${movie.id}`"
-              class="rounded-xl w-[250px] h-[330px] flex mx-auto md:mx-0 mt-[6rem] md:mt-0"
+              class="rounded-xl max-w-none w-[250px] h-[330px] flex mx-auto md:mx-0 mt-[6rem] md:mt-0"
               @error="(e) => handleImageError(e)"
             />
           </div>
@@ -209,14 +209,12 @@ const handleImageError = (e: any) => {
         title="Cast"
         :data="castCredit"
         :placeholder="isLoadCast"
-        @error="handleImageError"
       />
 
       <common-slider-section
         title="Related Movies"
         :data="recommendation"
         :placeholder="isLoadRecommendationnn"
-        @error="handleImageError"
       />
     </div>
   </div>
