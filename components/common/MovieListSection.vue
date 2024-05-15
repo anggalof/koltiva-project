@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { IconStar } from "@tabler/icons-vue";
 import localImagePath from "~/assets/img/image-not-found.jpeg";
-import { getYear } from "~/utils/formatter/dateTime";
 import { formatNumber } from "~/utils/formatter/formatNumber";
 import type { TMovies } from "~/types/Movies";
 
@@ -21,15 +20,13 @@ const changeFavorite = (id: number, type: boolean) => {
   emit("change", id, type);
 };
 
-const onFavorite = (id: any) => {
-  return props.favorite.some((item: any) => item.id === id);
+const onFavorite = (id: number) => {
+  return props.favorite.some((item: TMovies) => item.id === id);
 };
 
-const onImageError = (e: any) => {
+const onImageError = (e: HTMLElement) => {
   emit("error", e);
 };
-
-const showMore = props.title.includes("Movies");
 </script>
 
 <template>
@@ -50,19 +47,6 @@ const showMore = props.title.includes("Movies");
           :placeholder="localImagePath"
           @error="(e) => onImageError(e)"
         />
-
-        <div class="pt-2 pb-[0.1rem] text-[12px] text-black font-bold">
-          {{ showMore ? item.title : item.name }}
-        </div>
-        <div class="text-sm font-medium text-[#929292]">
-          {{
-            showMore
-              ? getYear(item.release_date)
-              : item.first_air_date
-              ? getYear(item.first_air_date)
-              : "-"
-          }}
-        </div>
         <div
           class="absolute flex opacity-[1] py-[4px] px-[8px] text-center text-base font-semibold top-0 left-0 text-white"
         >

@@ -1,3 +1,5 @@
+import type { TPayloadFavorite } from "~/types/Movies";
+
 const discoverUrl = "/api/discover";
 const favoriteUrl = "/api/account/8244407/favorite";
 const movieUrl = "/api/movie";
@@ -45,7 +47,7 @@ export const useTVGenres = async () => {
   return data.value;
 };
 
-export const useAddFavorite = async (payload: any) => {
+export const useAddFavorite = async (payload: TPayloadFavorite) => {
   const data = await useAPI(`${favoriteUrl}`, {
     method: 'POST',
     headers: {
@@ -57,17 +59,22 @@ export const useAddFavorite = async (payload: any) => {
   return data;
 };
 
-export const useMovieById = async (id: number) => {
+export const useMovieById = async (id: string | string[]) => {
   const { data } = await useAPI(`${movieUrl}/${id}`);
   return data.value;
 };
 
-export const useMovieCast = async (id: number) => {
+export const useMovieVideoById = async (id: string | string[]) => {
+  const { data } = await useAPI(`${movieUrl}/${id}/videos`);
+  return data.value;
+};
+
+export const useMovieCast = async (id: string | string[]) => {
   const { data } = await useAPI(`${movieUrl}/${id}/credits`);
   return data.value;
 }
 
-export const useMovieRecommendation = async (id: number) => {
+export const useMovieRecommendation = async (id: string | string[]) => {
   const { data } = await useAPI(`${movieUrl}/${id}/recommendations`);
   return data.value;
 }

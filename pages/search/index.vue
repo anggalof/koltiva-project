@@ -7,11 +7,12 @@ import {
   useSearchMovies,
 } from "~/composables/useMovies";
 import { useSearchStore } from "~/stores/searchStore";
+import type { TMovies, TFavorite, TMovie } from "~/types/Movies";
 
 const searchStore = useSearchStore();
-const query: any = ref("");
-const searchMovies: any = ref([]);
-const favoriteMovies: any = ref({});
+const query = ref<string>("");
+const searchMovies = ref<TMovies[]>([]);
+const favoriteMovies = ref<TMovies[]>([]);
 const isLoadingFav = ref<boolean>(false);
 const isShowLoadMore = ref<boolean>(false);
 const currentPage = ref<number>(1);
@@ -21,13 +22,13 @@ query.value = keyword.value;
 
 watch(
   () => searchStore.keyword,
-  async (newValue: any) => {
-    const movies: any = await loadSearchMovie(newValue);
+  async (newValue: string) => {
+    const movies = (await loadSearchMovie(newValue)) as TMovie;
     searchMovies.value = movies?.results;
   },
 );
 
-const loadSearchMovie = async (keyword: any) => {
+const loadSearchMovie = async (keyword: string) => {
   let data: any;
   if (keyword) {
     data = await useSearchMovies(keyword);
@@ -38,8 +39,8 @@ const loadSearchMovie = async (keyword: any) => {
 };
 
 const onLoadFavoriteMovies = async () => {
-  const favorite = await useFavoriteMovies();
-  favoriteMovies.value = favorite;
+  const favorite = (await useFavoriteMovies()) as TFavorite;
+  favoriteMovies.value = favorite?.results;
   isLoadingFav.value = false;
 };
 
@@ -54,9 +55,9 @@ const handleAddFavorite = async (id: number, type: boolean) => {
   onLoadFavoriteMovies();
 };
 
-const favorite: any = await useFavoriteMovies();
-favoriteMovies.value = favorite;
-const movies: any = await loadSearchMovie(query.value);
+const favorite = (await useFavoriteMovies()) as TFavorite;
+favoriteMovies.value = favorite?.results;
+const movies = (await loadSearchMovie(query.value)) as TMovie;
 searchMovies.value = movies?.results;
 </script>
 
@@ -65,7 +66,7 @@ searchMovies.value = movies?.results;
     title="Movies"
     :query="keyword"
     :search="searchMovies"
-    :favorite="favoriteMovies.results"
+    :favorite="favoriteMovies"
     :loading="isLoadingFav"
     :show="isShowLoadMore"
     @change="handleAddFavorite"

@@ -5,10 +5,11 @@ import {
   useFavoriteMovies,
   useTVGenres,
 } from "~/composables/useMovies";
+import type { TMovies, TMovie, TFavorite, TGenre } from "~/types/Movies";
 
-const discoverTVSeries: any = ref([]);
+const discoverTVSeries = ref<TMovies[]>([]);
 const isLoadingTVSeries = ref<boolean>(false);
-const favoriteMovies: any = ref({});
+const favoriteMovies = ref<TMovies[]>([]);
 const isLoadingFav = ref<boolean>(false);
 const currentPage = ref<number>(1);
 
@@ -17,19 +18,19 @@ const isShowLoadMore = ref<boolean>(true);
 
 const loadDiscoverTVSeriesData = async (genre: string) => {
   isLoadingTVSeries.value = true;
-  const data: any = await useDiscoverTVSeries(currentPage.value, genre);
+  const data = await useDiscoverTVSeries(currentPage.value, genre);
   if (data) {
     isLoadingTVSeries.value = false;
   }
   return data;
 };
 
-const movies: any = await loadDiscoverTVSeriesData(isGenre.value);
+const movies = (await loadDiscoverTVSeriesData(isGenre.value)) as TMovie;
 discoverTVSeries.value = movies?.results;
 
 const onLoadFavoriteMovies = async () => {
-  const favorite = await useFavoriteMovies();
-  favoriteMovies.value = favorite;
+  const favorite = (await useFavoriteMovies()) as TFavorite;
+  favoriteMovies.value = favorite?.results;
   isLoadingFav.value = false;
 };
 
@@ -46,8 +47,8 @@ const handleAddFavorite = async (id: number, type: boolean) => {
 
 const handleLoadMore = async () => {
   currentPage.value++;
-  const newData: any = await loadDiscoverTVSeriesData(isGenre.value);
-  const data: any = await newData.results;
+  const newData = (await loadDiscoverTVSeriesData(isGenre.value)) as TMovie;
+  const data = await newData.results;
   discoverTVSeries.value = [...discoverTVSeries.value, ...data];
 
   if (newData.page === newData.total_pages) {
@@ -57,10 +58,10 @@ const handleLoadMore = async () => {
   }
 };
 
-const handleFilterAction = async (id: any) => {
+const handleFilterAction = async (id: number) => {
   isGenre.value = id.toString();
-  const newData: any = await loadDiscoverTVSeriesData(isGenre.value);
-  const data: any = await newData.results;
+  const newData = (await loadDiscoverTVSeriesData(isGenre.value)) as TMovie;
+  const data = await newData.results;
   discoverTVSeries.value = data;
 
   if (newData.page === newData.total_pages) {
@@ -70,16 +71,16 @@ const handleFilterAction = async (id: any) => {
   }
 };
 
-const favorite: any = await useFavoriteMovies();
-const genreList: any = await useTVGenres();
-favoriteMovies.value = favorite;
+const favorite = (await useFavoriteMovies()) as TFavorite;
+const genreList = (await useTVGenres()) as TGenre;
+favoriteMovies.value = favorite?.results;
 </script>
 
 <template>
   <CommonMainSection
     title="TV Series"
     :discover="discoverTVSeries"
-    :favorite="favoriteMovies.results"
+    :favorite="favoriteMovies"
     :genres="genreList.genres"
     :loading="isLoadingFav"
     :placeholder="isLoadingTVSeries"

@@ -8,12 +8,13 @@ import {
   useGenres,
 } from "~/composables/useMovies";
 import { useSearchStore } from "~/stores/searchStore";
+import type { TMovies, TMovie, TFavorite, TGenre } from "~/types/Movies";
 
 const searchStore = useSearchStore();
 
 const isLoadingMovie = ref<boolean>(false);
-const popularList: any = ref([]);
-const favoriteMovies: any = ref({});
+const popularList = ref<TMovies[]>([]);
+const favoriteMovies = ref<TMovies[]>([]);
 const isLoadingFav = ref<boolean>(false);
 const currentPage = ref<number>(1);
 
@@ -29,15 +30,15 @@ if (!popularType.value) {
 
 watch(
   () => searchStore.popularType,
-  async (newValue: any) => {
-    const data: any = await loadPopularData(newValue);
+  async (newValue: string) => {
+    const data = (await loadPopularData(newValue)) as TMovie;
     popularList.value = data?.results;
   },
 );
 
 const loadPopularData = async (name: string) => {
   isLoadingMovie.value = true;
-  let data: any;
+  let data;
   if (name === "Popular Movies") {
     data = await usePopularMovies(currentPage.value);
   } else {
@@ -49,12 +50,12 @@ const loadPopularData = async (name: string) => {
   return data;
 };
 
-const data: any = await loadPopularData(popularType.value);
+const data = (await loadPopularData(popularType.value)) as TMovie;
 popularList.value = data?.results;
 
 const onLoadFavoriteMovies = async () => {
-  const favorite = await useFavoriteMovies();
-  favoriteMovies.value = favorite;
+  const favorite = (await useFavoriteMovies()) as TFavorite;
+  favoriteMovies.value = favorite?.results;
   isLoadingFav.value = false;
 };
 
@@ -71,8 +72,8 @@ const handleAddFavorite = async (id: number, type: boolean) => {
 
 const handleLoadMore = async () => {
   currentPage.value++;
-  const newData: any = await loadPopularData(popularType.value);
-  const data: any = await newData.results;
+  const newData = (await loadPopularData(popularType.value)) as TMovie;
+  const data = await newData.results;
   popularList.value = [...popularList.value, ...data];
 
   if (newData.page === newData.total_pages) {
@@ -82,10 +83,10 @@ const handleLoadMore = async () => {
   }
 };
 
-const handleFilterAction = async (id: any) => {
+const handleFilterAction = async (id: number) => {
   isGenre.value = id.toString();
-  const newData: any = await loadPopularData(popularType.value);
-  const data: any = await newData.results;
+  const newData = (await loadPopularData(popularType.value)) as TMovie;
+  const data = await newData.results;
   popularList.value = data;
 
   if (newData.page === newData.total_pages) {
@@ -95,16 +96,16 @@ const handleFilterAction = async (id: any) => {
   }
 };
 
-const favorite: any = await useFavoriteMovies();
-const genreList: any = await useGenres();
-favoriteMovies.value = favorite;
+const favorite = (await useFavoriteMovies()) as TFavorite;
+const genreList = (await useGenres()) as TGenre;
+favoriteMovies.value = favorite?.results;
 </script>
 
 <template>
   <CommonMainSection
     :title="popularType"
     :discover="popularList"
-    :favorite="favoriteMovies.results"
+    :favorite="favoriteMovies"
     :genres="genreList.genres"
     :loading="isLoadingFav"
     :placeholder="isLoadingMovie"

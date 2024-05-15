@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { IconBackground, IconSearch } from "@tabler/icons-vue";
 import type { MenuInterface } from "~/types/Routes";
 
 const props = defineProps<{
@@ -33,14 +32,12 @@ const handleSearchMovie = (event: Event) => {
     <div class="p-4 md:p-8 grow">
       <div class="w-full">
         <div class="flex justify-center mx-auto w-full md:w-[40rem] relative">
-          <IconBackground class="w-6 absolute top-[0.8rem] right-2 first-of-type:left-2" />
-          <IconSearch class="w-6 absolute top-[0.8rem] right-2 first-of-type:left-2" />
           <input
             v-model="searchMovie"
             type="text"
             name="search"
-            class="block w-full h-12 border-none py-[8px] px-[12px] text-[14px] indent-6 rounded-xl text-black bg-[#D9D9D9]"
-            placeholder="Search a movie or a series"
+            class="block w-full h-12 border-none py-[8px] px-[12px] text-center text-[14px] indent-6 rounded-full text-black bg-[#D9D9D9]"
+            placeholder="🔍 Search a movie or a series"
             @input="handleSearchMovie"
           />
         </div>

@@ -31,7 +31,7 @@ const handleDirect = () => {
         <img
           src="~assets/img/logo.svg"
           alt="logo"
-          class="w-24 my-0 md:my-4"
+          class="w-30 my-0 md:my-4"
         />
       </div>
 

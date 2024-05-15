@@ -12,7 +12,7 @@ const emit = defineEmits(["click"]);
 
 const selectedGenre = ref<Number>(0);
 
-const handleFilterAction = (id: any) => {
+const handleFilterAction = (id: number) => {
   selectedGenre.value = id;
   emit("click", id);
 };

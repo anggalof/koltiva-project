@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { usePopularMovies, useTVPopularMovies } from "~/composables/useMovies";
+import type { TMovie } from "~/types/Movies";
 
-const popularMovies: any = ref([]);
 const isLoadPopularMovie = ref<boolean>(false);
-const tvPopularMovies: any = ref([]);
 const isLoadPopularTV = ref<boolean>(false);
 const currentPage = ref<number>(1);
 
@@ -26,23 +25,21 @@ const loadTVPopularData = async () => {
   return data;
 };
 
-const movies: any = await loadPopularData();
-popularMovies.value = movies?.results;
-const tvMovies: any = await loadTVPopularData();
-tvPopularMovies.value = tvMovies?.results;
+const movies = (await loadPopularData()) as TMovie;
+const tvMovies = (await loadTVPopularData()) as TMovie;
 </script>
 
 <template>
   <div class="p-4 md:p-6">
     <common-slider-section
       title="Popular Movies"
-      :data="popularMovies"
+      :data="movies?.results"
       :placeholder="isLoadPopularMovie"
     />
 
     <common-slider-section
       title="Popular TV Series"
-      :data="tvPopularMovies"
+      :data="tvMovies?.results"
       :placeholder="isLoadPopularTV"
     />
   </div>

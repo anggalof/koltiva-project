@@ -20,7 +20,7 @@ const countLoading = [1, 2, 3, 4, 5, 6];
 <template>
   <div class="bg-[#EBEAEA]">
     <div class="flex justify-between items-center text-white">
-      <div class="text-lg font-bold text-black">{{ title }}</div>
+      <div class="text-lg font-medium text-black">{{ title }}</div>
       <div
         v-if="showMore"
         class="block md:flex;"
@@ -54,16 +54,14 @@ const countLoading = [1, 2, 3, 4, 5, 6];
       <div
         v-for="item in props.data"
         :key="item.id"
-        class="relative mr-2 w-[10rem]"
+        class="relative mr-4 w-[10rem]"
       >
         <common-slider-card-section
           :id="item.id"
           :title="title"
-          :name="title === 'Popular Movies' ? item.title : item.name"
+          :name="item.name"
           :image="title === 'Cast' ? item.profile_path : item.poster_path"
-          :subtype="title === 'Popular Movies' ? item.release_date : item.first_air_date"
           :character="item.character"
-          :rating="item.vote_average"
         />
       </div>
     </div>

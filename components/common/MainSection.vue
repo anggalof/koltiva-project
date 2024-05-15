@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import type { TMovies } from "~/types/Movies";
-
-type TGenres = {
-  id: number;
-  name: string;
-};
+import type { TMovies, TGenres } from "~/types/Movies";
 
 const props = defineProps<{
   title: string;
@@ -19,7 +14,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "change", id: number, type: boolean): void;
   (e: "load"): void;
-  (e: "click", id: any): void;
+  (e: "click", id: number): void;
 }>();
 
 const changeFavorite = (id: number, type: boolean) => {
@@ -30,7 +25,7 @@ const loadMore = () => {
   emit("load");
 };
 
-const handleFilterAction = (id: any) => {
+const handleFilterAction = (id: number) => {
   emit("click", id);
 };
 

@@ -14,7 +14,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "change", id: number, type: boolean): void;
   (e: "error", index: number): void;
-  (e: "click", id: any): void;
+  (e: "click", id: number): void;
 }>();
 
 const changeFavorite = (id: number, type: boolean) => {
