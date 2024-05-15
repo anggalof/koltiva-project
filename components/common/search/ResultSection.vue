@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import MovieListSection from "~/components/common/MovieListSection.vue";
 import type { TMovies } from "~/types/Movies";
 
-const props = defineProps<{
+interface Props {
   title: string;
   search: TMovies[];
   favorite: TMovies[];
   loading: boolean;
   show: boolean;
   query: string;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (e: "change", id: number, type: boolean): void;
@@ -39,8 +40,8 @@ const loadMore = () => {};
       </div>
     </div>
     <div class="mt-4 mb-10">
-      <div v-if="props.search.length > 0">
-        <MovieListSection
+      <div v-if="props.search && props.search.length > 0">
+        <CommonMovieListSection
           :title="title"
           :data="props.search"
           :favorite="props.favorite"

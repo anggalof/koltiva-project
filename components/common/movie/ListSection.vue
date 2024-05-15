@@ -4,13 +4,15 @@ import localImagePath from "~/assets/img/image-not-found.jpeg";
 import { formatNumber } from "~/utils/formatter/formatNumber";
 import type { TMovies } from "~/types/Movies";
 
-const props = defineProps<{
+interface Props {
   data: TMovies[];
   favorite: TMovies[];
   loading: boolean;
   show: boolean | null | undefined;
   title: string;
-}>();
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits(["change", "load", "error"]);
 

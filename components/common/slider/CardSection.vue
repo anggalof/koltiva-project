@@ -1,4 +1,5 @@
 <script setup>
+// const localImagePath = new URL("~img/image-not-found.jpeg", import.meta.url).href;
 import localImagePath from "~/assets/img/image-not-found.jpeg";
 
 defineProps({
@@ -40,7 +41,7 @@ defineProps({
         v-if="title === 'Cast'"
         class="bg-white text-black p-2 rounded-br-xl rounded-bl-xl"
       >
-        <div class="text-[12px] text-black font-bold">
+        <div class="text-[12px] text-black font-bold character">
           {{ name }}
         </div>
         <div class="text-xs font-medium text-[#929292] character">

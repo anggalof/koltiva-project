@@ -89,8 +89,8 @@ if (!videoTrailer) {
           <div class="w-full md:w-[80%] mt-4 text-sm font-medium text-black leading-[21.09px]">
             {{ movie.overview }}
           </div>
-          <div class="block md:flex py-8">
-            <div class="">
+          <div class="flex py-8 justify-center md:justify-start">
+            <div>
               <div class="font-base">IMDB Rating</div>
               <div class="flex items-center text-black text-md mr-4">
                 <img

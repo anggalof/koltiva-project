@@ -1,16 +1,20 @@
 <script lang="ts" setup>
+import { ref } from "vue";
+
 type TGenres = {
   id: number;
   name: string;
 };
 
-const props = defineProps<{
+interface Props {
   genres: TGenres[];
-}>();
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits(["click"]);
 
-const selectedGenre = ref<Number>(0);
+const selectedGenre = ref<number>(0);
 
 const handleFilterAction = (id: number) => {
   selectedGenre.value = id;
@@ -20,7 +24,7 @@ const handleFilterAction = (id: number) => {
 
 <template>
   <div class="w-full flex justify-around overflow-y-scroll mb-6">
-    <div
+    <button
       v-for="(genre, index) in props.genres"
       :key="index"
       class="mr-3"
@@ -36,6 +40,6 @@ const handleFilterAction = (id: number) => {
       >
         {{ genre.name }}
       </div>
-    </div>
+    </button>
   </div>
 </template>

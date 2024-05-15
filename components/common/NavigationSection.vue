@@ -35,7 +35,7 @@ const handleDirect = () => {
         />
       </div>
 
-      <CommonNavbarSection
+      <CommonNavigationNavbarSection
         name="hidden md:flex items-center w-full"
         :menus="menus"
         @close="handleCloseModal"
@@ -67,7 +67,7 @@ const handleDirect = () => {
         @click="handleCloseModal"
       ></div>
       <div class="bg-[#292e36] z-[99999] h-[100vh] fixed right-0 top-0 overflow-y-auto">
-        <CommonNavbarSection
+        <CommonNavigationNavbarSection
           name="block py-[10px] pl-[4px] pr-[6px] ml-auto"
           :menus="props.menus"
           @close="handleCloseModal"
